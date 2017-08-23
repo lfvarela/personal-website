@@ -1,7 +1,5 @@
 function showAll(){
   BTCPrice();
-  ETHPrice();
-
 }
 
 /** ---------------------------------------------------------------------------
@@ -28,23 +26,15 @@ btcRequestObj.addEventListener("load", showBTCPrice, false);
 /** ---------------------------------------------------------------------------
  * Deal with ETH Price
  */
-function ETHPrice(){
-  var request = "https://bittrex.com/api/v1.1/public/getticker?market=BTC-ETH"
-  ethRequestObj.open("GET", request, true);
-  ethRequestObj.setRequestHeader("Access-Control-Allow-Origin",null);
-  ethRequestObj.send(null);
-}
 
 function showETHPrice(){
-  var response = JSON.parse(ethRequestObj.responseText);
+  var response = JSON.parse(xhr.responseText);
   if(response["success"] == true){
     var ethPrice =  response["result"]["Last"];
     document.getElementById("ETH").value = ethPrice;
   }
 }
 
-var ethRequestObj = new XMLHttpRequest();
-ethRequestObj.addEventListener("load", showETHPrice, false);
 /* ------------------------------------------------------------------------- */
 
 
