@@ -1,10 +1,10 @@
-function showAll(){
+function showAllPrices(){
   BTCPrice();
+  ETHPrice();
 }
 
-/** ---------------------------------------------------------------------------
- * Deal with BTC Price
- */
+// Bitcoin
+// =============================================================================
 var btcPrice;
 
 function BTCPrice(){
@@ -23,19 +23,25 @@ function showBTCPrice(){
 var btcRequestObj = new XMLHttpRequest();
 btcRequestObj.addEventListener("load", showBTCPrice, false);
 
-/** ---------------------------------------------------------------------------
- * Deal with ETH Price
- */
+// Ethereum
+// =============================================================================
+function ETHPrice() {
+  var request = 'http://54.153.21.3:8080/api/getprice'; //EC2 IP address TODO: Get elastic IP
+  request += '/BTC-ETH';
+  ethRequestObj.open("GET", request, true);
+  ethRequestObj.send(null);
+}
 
 function showETHPrice(){
-  var response = JSON.parse(xhr.responseText);
-  if(response["success"] == true){
-    var ethPrice =  response["result"]["Last"];
-    document.getElementById("ETH").value = ethPrice;
-  }
+  var response = JSON.parse(ethRequestObj.responseText);
+  var ethPrice = btcPrice*response["price"];
+  document.getElementById("ETH").value = ethPrice;
 }
+
+var ethRequestObj = new XMLHttpRequest();
+ethRequestObj.addEventListener("load", showETHPrice, false);
 
 /* ------------------------------------------------------------------------- */
 
 
-document.getElementById("calculate_button").addEventListener("click", showAll, false);
+document.getElementById("calculate_button").addEventListener("click", showAllPrices, false);
