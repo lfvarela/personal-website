@@ -24,31 +24,28 @@ btcRequestObj.addEventListener("load", updateBTCPrice, false);
 
 // Bittrex cryptos (All are relative to BTC price)
 // =============================================================================
-var tickers = ['ETH', 'LTC'];
-var currTicker;
+var requestObjects = [];
+var tickers = ['ETH', 'LTC', 'XRP', 'OMG', 'NEO'];
 function bittrexPrices(){
   for(var i = 0; i < tickers.length; i++){
-    currTicker = tickers[i];
-    sendGetPriceRequest(currTicker);
-    setTimeout(function(){ return; }, 1000);
+    sendGetPriceRequest(i);
   }
 }
 
-function sendGetPriceRequest(ticker) {
+function sendGetPriceRequest(index) {
+  requestObjects[index] = new XMLHttpRequest();
+  requestObjects[index].addEventListener("load", function(){ showPrice(index) }, false);
   var request = 'http://54.153.21.3:8080/api/getprice/'; //EC2 IP address TODO: Get elastic IP
-  request += 'BTC-' + ticker;
-  requestObj.open("GET", request, true);
-  requestObj.send(null);
+  request += 'BTC-' + tickers[index];
+  requestObjects[index].open("GET", request, true);
+  requestObjects[index].send(null);
 }
 
-function showPrice(){
-  var response = JSON.parse(requestObj.responseText);
+function showPrice(index){
+  var response = JSON.parse(requestObjects[index].responseText);
   var price = btcPrice*response["price"];
-  document.getElementById(currTicker).value = price;
+  document.getElementById(tickers[index]).value = price;
 }
-
-var requestObj = new XMLHttpRequest();
-requestObj.addEventListener("load", showPrice, false);
 
 /* ------------------------------------------------------------------------- */
 
