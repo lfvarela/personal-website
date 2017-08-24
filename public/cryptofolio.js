@@ -1,11 +1,11 @@
 function showAllPrices(){
-  BTCPrice();
-  ETHPrice();
+  bittrexPrices();
 }
 
 // Bitcoin
 // =============================================================================
 var btcPrice;
+var btcPriceUpdated;
 
 function BTCPrice(){
   var request = "https://api.coinbase.com/v2/prices/spot?currency=USD"
@@ -14,34 +14,43 @@ function BTCPrice(){
   btcRequestObj.send(null);
 }
 
-function showBTCPrice(){
+function updateBTCPrice(){
   var response = JSON.parse(btcRequestObj.responseText);
   btcPrice = response["data"]["amount"];
-  document.getElementById("BTC").value = btcPrice;
 }
 
 var btcRequestObj = new XMLHttpRequest();
-btcRequestObj.addEventListener("load", showBTCPrice, false);
+btcRequestObj.addEventListener("load", updateBTCPrice, false);
 
-// Ethereum
+// Bittrex cryptos (All are relative to BTC price)
 // =============================================================================
-function ETHPrice() {
-  var request = 'http://54.153.21.3:8080/api/getprice'; //EC2 IP address TODO: Get elastic IP
-  request += '/BTC-ETH';
-  ethRequestObj.open("GET", request, true);
-  ethRequestObj.send(null);
+var tickers = ['ETH', 'LTC'];
+var currTicker;
+function bittrexPrices(){
+  for(var i = 0; i < tickers.length; i++){
+    currTicker = tickers[i];
+    sendGetPriceRequest(currTicker);
+    setTimeout(function(){ return; }, 1000);
+  }
 }
 
-function showETHPrice(){
-  var response = JSON.parse(ethRequestObj.responseText);
-  var ethPrice = btcPrice*response["price"];
-  document.getElementById("ETH").value = ethPrice;
+function sendGetPriceRequest(ticker) {
+  var request = 'http://54.153.21.3:8080/api/getprice/'; //EC2 IP address TODO: Get elastic IP
+  request += 'BTC-' + ticker;
+  requestObj.open("GET", request, true);
+  requestObj.send(null);
 }
 
-var ethRequestObj = new XMLHttpRequest();
-ethRequestObj.addEventListener("load", showETHPrice, false);
+function showPrice(){
+  var response = JSON.parse(requestObj.responseText);
+  var price = btcPrice*response["price"];
+  document.getElementById(currTicker).value = price;
+}
+
+var requestObj = new XMLHttpRequest();
+requestObj.addEventListener("load", showPrice, false);
 
 /* ------------------------------------------------------------------------- */
 
-
+BTCPrice();
 document.getElementById("calculate_button").addEventListener("click", showAllPrices, false);
