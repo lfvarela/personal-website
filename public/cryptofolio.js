@@ -124,9 +124,9 @@ function DAT(){
   var DATprice = ETHprice / 10000;
   var kCoins = document.getElementById('kDAT').value;
   document.getElementById('DAT').value = numToShortStr(DATprice);
-  var value = DATprice * kCoins;
-  document.getElementById('tDAT').value = numToShortStr(value);
-  total += DATprice;
+  var DATvalue = DATprice * kCoins;
+  document.getElementById('tDAT').value = numToShortStr(DATvalue);
+  total += DATvalue;
 }
 
 /* ------------------------------------------------------------------------- */
