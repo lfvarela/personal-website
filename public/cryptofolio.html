@@ -8,12 +8,63 @@
 </head>
 <body>
   <h3>Currencies</h3>
-  <div class="entry">ETH: <input type="text" id="ETH" value=""></div>
-  <div class="entry">LTC: <input type="text" id="LTC" value=""></div>
-  <div class="entry">XRP: <input type="text" id="XRP" value=""></div>
-  <div class="entry">OMG: <input type="text" id="OMG" value=""></div>
-  <div class="entry">NEO: <input type="text" id="NEO" value=""></div>
-
-  <input type="button" id="calculate_button" value="Calculate!">
+  <span id="warning"></span>
+  <div class="entry">
+    ETH:
+    <input type="text" id="ETH" value="">
+    <input type="text" id="kETH" value="13.311">
+    <input type="text" id="tETH" value="">
+  </div>
+  <div class="entry">
+    LTC:
+    <input type="text" id="LTC" value="">
+    <input type="text" id="kLTC" value="39.678">
+    <input type="text" id="tLTC" value="">
+  </div>
+  <div class="entry">
+    XRP:
+    <input type="text" id="XRP" value="">
+    <input type="text" id="kXRP" value="12782">
+    <input type="text" id="tXRP" value="">
+  </div>
+  <div class="entry">
+    OMG:
+    <input type="text" id="OMG" value="">
+    <input type="text" id="kOMG" value="297.68">
+    <input type="text" id="tOMG" value="">
+  </div>
+  <div class="entry">
+    NEO:
+    <input type="text" id="NEO" value="">
+    <input type="text" id="kNEO" value="22.658">
+    <input type="text" id="tNEO" value="">
+  </div>
+  <div class="entry">
+    DAT:
+    <input type="text" id="DAT" value="">
+    <input type="text" id="kDAT" value="47123.73">
+    <input type="text" id="tDAT" value="">
+  </div>
+  <div class="entry">
+    PLR:
+    <input type="text" id="PLR" value="0.10">
+    <input type="text" id="kPLR" value="10193">
+    <input type="text" id="tPLR" value="">
+  </div>
+  <div class="entry">
+    DNT:
+    <input type="text" id="DNT" value="0.111">
+    <input type="text" id="kDNT" value="3510.85">
+    <input type="text" id="tDNT" value="">
+    <span>Note: Prices for PLR and DNT are currently not being fetched</span>
+  </div>
+  <div class="entry">
+    Total:
+    <input type="text" id="total" value="">
+  </div>
+  <div>
+    <input type="button" id="prices_button" value="Update All">
+    <input type="button" id="values_button" value="Calculate with Manual Entries">
+  </div>
 </body>
 </html>
